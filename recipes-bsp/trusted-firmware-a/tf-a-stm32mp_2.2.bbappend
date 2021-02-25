@@ -1,0 +1,2 @@
+
+DEPENDS += "linux-firmware"
