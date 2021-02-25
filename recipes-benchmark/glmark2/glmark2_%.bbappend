@@ -10,3 +10,5 @@ PACKAGECONFIG = "${@bb.utils.contains('DISTRO_FEATURES', 'x11 opengl', 'x11-gl x
                  ${@bb.utils.contains('DISTRO_FEATURES', 'wayland opengl', 'wayland-gles2', '', d)} \
                  drm-gles2"
 
+SRC_URI_append += " file://0001-fix-replace-with-buildable-waflib-from-gitlab.com.patch "
+
