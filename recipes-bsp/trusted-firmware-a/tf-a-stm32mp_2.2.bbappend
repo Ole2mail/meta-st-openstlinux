@@ -1,7 +1,9 @@
 
 do_unpack_prepend () {
     bb.build.exec_func('restore_shared_folder', d)
+}
 
+do_unpack_append () {
     shared = d.getVar("TFA_SHARED_SOURCES")
     if shared and oe.types.boolean(shared):
         # Copy/Paste from kernel class with adaptation to TFA var
