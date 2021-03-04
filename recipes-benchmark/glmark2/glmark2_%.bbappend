@@ -1,6 +1,6 @@
 FILESEXTRAPATHS_prepend := "${THISDIR}/${PN}:"
 
-DEPENDS += " udev waf-light"
+DEPENDS += " udev waf-light-native apt-native"
 
 SRC_URI_remove = "file://0001-Fix-clang-warnings.patch"
 
@@ -10,5 +10,12 @@ PACKAGECONFIG = "${@bb.utils.contains('DISTRO_FEATURES', 'x11 opengl', 'x11-gl x
                  ${@bb.utils.contains('DISTRO_FEATURES', 'wayland opengl', 'wayland-gles2', '', d)} \
                  drm-gles2"
 
-SRC_URI_append += " file://0001-fix-replace-with-buildable-waflib-from-gitlab.com.patch "
+# use this patch if recipe waf-light-native fails to clone
+#SRC_URI_append += " file://0001-fix-replace-with-buildable-waflib-from-gitlab.com.patch "
 
+# use this prepand along with waf-light-native recipe
+do_configure_prepend() {
+	rm -Rf ${S}/waf ${S}/waflib
+	ln -s `which waf-light` ${S}/waf
+	ln -s $(dirname `which waf-light`)/waflib ${S}/waflib
+}
